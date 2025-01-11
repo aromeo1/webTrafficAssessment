@@ -1,0 +1,20 @@
+{
+  "name": "json-api-server-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "mocha",
+    "test-01": "mocha test/01.js",
+    "test-02": "mocha test/02.js",
+    "test-03": "mocha test/03.js",
+    "test-04": "mocha test/04.js",
+    "test-05": "mocha test/05.js",
+    "test-06": "mocha test/06.js",
+    "test-07": "mocha test/07.js",
+    "test-08": "mocha test/08.js",
+    "test-09": "mocha test/09.js"
+  },
+  "author": "App Academy"
+}

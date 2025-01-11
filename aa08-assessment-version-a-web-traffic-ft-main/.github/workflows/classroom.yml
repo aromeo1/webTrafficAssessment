@@ -1,0 +1,115 @@
+name: GitHub Classroom Autograder - HTML/CSS 2a (Web Traffic)
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+
+env:
+  MAX_SCORE: 157
+  PASSING_SCORE: 126
+  COURSE_ID: '313' # (Required) canvas course id
+  ASSIGNMENT_ID: '17516' # (Required) canvas assignment id
+
+jobs:
+  grade:
+    name: Grade Submission for ${{ github.actor }}
+    env:
+      DB_FILE: db/dev.db
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display necessary software versions
+        run: |
+          echo "Node version: $(node --version)"
+          echo "Npm version: $(npm --version)"
+      - name: Checkout student code
+        uses: actions/checkout@v4
+        with:
+          path: student/
+      - name: Remove student test files
+        run: |
+          rm -rf student/fetch/test/
+          rm -rf student/html-web-server/test/
+          rm -rf student/json-api-server/test/
+      - name: Checkout solution test files
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+          repository: ${{ secrets.SOLUTION_REPO_NAME }}
+          path: solution/
+          sparse-checkout: |
+            ${{ secrets.SOLUTION_PROJECT_PATH }}/fetch/test/
+            ${{ secrets.SOLUTION_PROJECT_PATH }}/html-web-server/test/
+            ${{ secrets.SOLUTION_PROJECT_PATH }}/json-api-server/test/
+          sparse-checkout-cone-mode: false
+      - name: Move solution tests files to student folder
+        run: |
+          cp -r solution/${{ secrets.SOLUTION_PROJECT_PATH }}/fetch/test/ student/fetch/test/
+          cp -r solution/${{ secrets.SOLUTION_PROJECT_PATH }}/html-web-server/test/ student/html-web-server/test/
+          cp -r solution/${{ secrets.SOLUTION_PROJECT_PATH }}/json-api-server/test/ student/json-api-server/test/
+      - name: Install dependencies in student folder
+        run: |
+          cd student/
+          npm install
+      - name: Run fetch tests in student folder
+        # Mocha exits with code corresponding to the # of fails
+        continue-on-error: true
+        run: |
+          cd student/fetch
+          (npx mocha --reporter json --reporter-option output=output.json --timeout 100000) 1> /dev/null 2> errors.txt
+      - name: Run html-web-server tests in student folder
+        # Mocha exits with code corresponding to the # of fails
+        continue-on-error: true
+        run: |
+          cd student/html-web-server
+          (npx mocha --reporter json --reporter-option output=output.json --timeout 100000) 1> /dev/null 2> errors.txt
+      - name: Run json-api-server tests in student folder
+        # Mocha exits with code corresponding to the # of fails
+        continue-on-error: true
+        run: |
+          cd student/json-api-server
+          (npx mocha --reporter json --reporter-option output=output.json --timeout 100000) 1> /dev/null 2> errors.txt
+      - name: Display failed tests
+        run: |
+          cd student/
+          echo "Fetch failures"
+          cat fetch/errors.txt
+          cat fetch/output.json | jq '[(.failures[] | {fullTitle, error: .err.message})]'
+          echo "HTML-web-server failures"
+          cat html-web-server/errors.txt
+          cat html-web-server/output.json | jq '[(.failures[] | {fullTitle, error: .err.message})]'
+          echo "JSON-api-server failures"
+          cat json-api-server/errors.txt
+          cat json-api-server/output.json | jq '[(.failures[] | {fullTitle, error: .err.message})]'
+      - name: Send student's grade to SF
+        if: ${{ always() }}
+        run: |
+          cd student/
+          posted_score1="$( cat fetch/output.json | jq '.stats.passes' )"
+          posted_score2="$( cat html-web-server/output.json | jq '.stats.passes' )"
+          posted_score3="$( cat json-api-server/output.json | jq '.stats.passes' )"
+          if [ "$posted_score1" = "" ]
+          then
+            posted_score1="0"
+          fi
+          if [ "$posted_score2" = "" ]
+          then
+            posted_score2="0"
+          fi
+          if [ "$posted_score3" = "" ]
+          then
+            posted_score3="0"
+          fi
+          posted_score=$(( ( $posted_score1 * 4 ) + $posted_score2 + $posted_score3 ))
+          echo "  SCORE: $posted_score  "
+          curl -X POST '${{ secrets.RESULTS_WEBHOOK }}' \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "GithubUsername": "${{ github.ref_name }}",
+              "PostedGrade": "'${posted_score}'",
+              "MaxScore": "'${MAX_SCORE}'",
+              "PassingScore": "'${PASSING_SCORE}'",
+              "CourseId": "'${COURSE_ID}'",
+              "AssignmentId": "'${ASSIGNMENT_ID}'",
+              "GithubRepoUrlPath": "${{ github.repository }}"
+            }'

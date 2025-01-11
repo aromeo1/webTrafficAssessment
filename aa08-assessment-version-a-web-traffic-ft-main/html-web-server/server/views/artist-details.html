@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist: #{name}</title>
+</head>
+
+<body>
+  <h1>#{name}</h1>
+  <ul>
+    #{paintings}
+  </ul>
+  <h2>Add a Painting</h2>
+  <form action="/artists/#{artistId}/paintings" method="post">
+    <label>
+      Name
+      <input type="text" name="name" />
+    </label>
+    <label>
+      Year
+      <input type="number" name="year" />
+    </label>
+    <button type="submit">Add Painting</button>
+  </form>
+</body>
+
+</html>

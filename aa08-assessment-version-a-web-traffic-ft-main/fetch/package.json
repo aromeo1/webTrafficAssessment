@@ -1,0 +1,11 @@
+{
+  "name": "fetch-a",
+  "version": "1.0.0",
+  "main": "fetch-post.js",
+  "scripts": {
+    "test": "mocha",
+    "test-with-json": "mocha --reporter json"
+  },
+  "author": "App Academy",
+  "private": true
+}
