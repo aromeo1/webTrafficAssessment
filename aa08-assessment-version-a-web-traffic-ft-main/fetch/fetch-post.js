@@ -8,7 +8,24 @@ if (!fetch) {
 
  ******************************************************************************/
 
-// Your code here 
+function addPerson(){
+  const url = 'http://example.com/api/people';
+  const data ={
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    firstName: 'Maul',
+    lastName: 'Kimmerman',
+  })
+};
+
+return fetch(url, data)
+  .then(response => response.json())
+  .then(data => data.people)
+  .catch(error => console.error('Error:', error));
+}
 
 
 /*******************************************************************************
