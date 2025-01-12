@@ -2,141 +2,172 @@
   "1": {
     "endpoint": "1 - Get all the artists",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "GET",
+      "URL": "/artists",
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "statusCode": 200,
+      "body": true
     }
   },
   "2": {
     "endpoint": "2 - Get a specific artist's details based on artistId",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "GET",
+      "URL": "/artists/:artistId",
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "statusCode": 200,
+      "body": true
     }
   },
   "3": {
     "endpoint": "3 - Get the form to add an artist",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "GET",
+      "URL": "?????",
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "statusCode": 200,
+      "body": true
     }
   },
   "4": {
     "endpoint": "4 -  Form submission for adding an artist",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "POST",
+      "URL": "/artists",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "body": {
+        "name": "Silly Salamander"
+      }
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
+      "headers": {
+        "Location":"/artists/:artistId"
+      },
+      "statusCode": 302,
       "body": null
     }
   },
   "5": {
     "endpoint": "5 - Get the form to edit an artist",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "GET",
+      "URL": "/artists/:artistId",
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "statusCode": 200,
+      "body": true
     }
   },
   "6": {
     "endpoint": "6 - Form submission for editting an artist",
     "request": {
-      "method": "",
+      "method": "POST",
       "URL": "",
-      "headers": null,
-      "body": null
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "body": {
+        "name": "Silly Salamander III"
+      }
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Location":"/artists/:artistId"
+      },
+      "statusCode": 302,
+      "body": false
     }
   },
   "7": {
     "endpoint": "7 - Get all the paintings of a specific year",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "GET",
+      "URL": "/artist/paintings",
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "statusCode": 200,
+      "body": true
     }
   },
   "8": {
     "endpoint": "8 - Get all the information of a specified painting by paintingId",
     "request": {
-      "method": "",
+      "method": "GET",
       "URL": "",
-      "headers": null,
-      "body": null
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "statusCode": 200,
+      "body": true
     }
   },
   "9": {
     "endpoint": "9 - Form submission for adding a painting to a specific artist based on artistId",
     "request": {
-      "method": "",
-      "URL": "",
-      "headers": null,
-      "body": null
+      "method": "POST",
+      "URL": "/artists/:artistId/paintings",
+      "headers": {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      "body": {
+        "name": "I'm drowning in a sea of tears",
+        "year": "3 and a Half"
+      }
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": {
+        "Location":"/artists/:artistId/paintings"
+      },
+      "statusCode": 302,
+      "body": false
     }
   },
   "10": {
     "endpoint": "10 - Form submission for deleting a painting",
     "request": {
-      "method": "",
+      "method": "POST",
       "URL": "",
-      "headers": null,
-      "body": null
+      "headers": false,
+      "body": false
     },
     "response": {
-      "headers": null,
-      "statusCode": null,
-      "body": null
+      "headers": false,
+      "statusCode": 302,
+      "body": false
     }
   }
 }
